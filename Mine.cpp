@@ -22,6 +22,7 @@ DWORD findProcId(char* procName) {
     if (procSnap == INVALID_HANDLE_VALUE)
     {
         std::cout << "taking a snapshot failed" << std::endl;
+        CloseHandle(procSnap);
         return result;
     }
     else {
@@ -32,6 +33,7 @@ DWORD findProcId(char* procName) {
                 break;
             }
         }
+        CloseHandle(procSnap);
         return result;
     }
     
@@ -53,11 +55,11 @@ int main()
             std::cout << "Getting a handle and changing the address values.." << std::endl;
             HANDLE handle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, procID);
             
-            WriteProcessMemory(handle, (PVOID)flagBaseAddr, &flagBaseAddr, sizeof(int), 0);
+           
             while (true)
             {
                 WriteProcessMemory(handle, (PVOID)timeBaseAddr, &timeValue, sizeof(int), 0);
-                
+                WriteProcessMemory(handle, (PVOID)flagBaseAddr, &flagBaseAddr, sizeof(int), 0);
             }
             
         }
