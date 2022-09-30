@@ -1,6 +1,6 @@
 #include <iostream>
 #include <Windows.h>
-#include < TlHelp32.h>
+#include <TlHelp32.h>
 
 DWORD flagBaseAddr = 0x01005194;
 DWORD timeBaseAddr = 0x0100579C;
@@ -18,7 +18,7 @@ DWORD findProcId(char* procName) {
 
     if (procSnap == INVALID_HANDLE_VALUE)
     {
-        std::cout << "taking a snaproc failed" << std::endl;
+        std::cout << "taking a snapshot failed" << std::endl;
         return result;
     }
     else {
@@ -48,7 +48,7 @@ int main()
         {
             std::cout << "proc ID's match. One is from snap and one is from window name" << std::endl;
             std::cout << "Getting a handle and changing the address values.." << std::endl;
-           
+            HANDLE handle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, procID);
 
 
         }
