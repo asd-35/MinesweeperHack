@@ -4,6 +4,9 @@
 
 DWORD flagBaseAddr = 0x01005194;
 DWORD timeBaseAddr = 0x0100579C;
+int flagValue = 99;
+int timeValue = 1;
+
 
 DWORD procID;
 
@@ -40,7 +43,7 @@ int main()
     HWND hwnd = FindWindowA(NULL, "Minesweeper");
 
     if (hwnd == NULL) {
-        std::cout << "lol";
+        std::cout << "game is not open";
     }
     else {
         GetWindowThreadProcessId(hwnd, &procID);
@@ -49,8 +52,14 @@ int main()
             std::cout << "proc ID's match. One is from snap and one is from window name" << std::endl;
             std::cout << "Getting a handle and changing the address values.." << std::endl;
             HANDLE handle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, procID);
-
-
+            
+            WriteProcessMemory(handle, (PVOID)flagBaseAddr, &flagBaseAddr, sizeof(int), 0);
+            while (true)
+            {
+                WriteProcessMemory(handle, (PVOID)timeBaseAddr, &timeValue, sizeof(int), 0);
+                
+            }
+            
         }
     }
 
