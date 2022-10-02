@@ -1,11 +1,34 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "pch.h"
 #include "Windows.h"
-
+#include "iostream"
 
 DWORD WINAPI MineThread(HMODULE hModule) {
     AllocConsole();
+    FILE* f;
+    fopen_s(&f,"CONOUT$","w");
 
+    std::cout << "Minesweeper DLL Hack";
+
+    FreeConsole();
+
+    DWORD moduleBase = (DWORD)GetModuleHandle("Winmine__XP.exe");
+
+    while (true)
+    {
+        int* time = (int*)moduleBase + 0x579C;
+        *time = 1;
+        int* flag = (int*)moduleBase + 0x5194;
+        *flag = 99;
+    }
+    
+    
+
+    //fclose(f);
+    
+
+    FreeLibraryAndExitThread(hModule, 0);
+    return 0;
 }
 
 BOOL APIENTRY DllMain( HMODULE hModule,
